@@ -1,0 +1,144 @@
+{
+  "name": "المدير — بيئة العمل الإنتاجية",
+  "short_name": "المدير",
+  "description": "بيئة عمل إنتاجية متكاملة مع مساعد ذكاء اصطناعي — إدارة المهام، الملاحظات، التقويم، والمحادثة الذكية",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#6c63ff",
+  "background_color": "#0f0f13",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["productivity", "utilities", "business"],
+
+  "icons": [
+    {
+      "src": "/icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+
+  "screenshots": [
+    {
+      "src": "/screenshots/dashboard.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "لوحة التحكم"
+    },
+    {
+      "src": "/screenshots/tasks.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "لوحة المهام"
+    },
+    {
+      "src": "/screenshots/mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "العرض على الجوال"
+    }
+  ],
+
+  "shortcuts": [
+    {
+      "name": "إضافة مهمة",
+      "short_name": "مهمة",
+      "description": "إضافة مهمة جديدة بسرعة",
+      "url": "/?action=new-task",
+      "icons": [{ "src": "/icons/shortcut-task.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "ملاحظة جديدة",
+      "short_name": "ملاحظة",
+      "description": "إنشاء ملاحظة جديدة",
+      "url": "/?action=new-note",
+      "icons": [{ "src": "/icons/shortcut-note.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "المحادثة",
+      "short_name": "شات",
+      "description": "فتح المحادثة مع AI",
+      "url": "/?tab=chat",
+      "icons": [{ "src": "/icons/shortcut-chat.png", "sizes": "96x96" }]
+    }
+  ],
+
+  "related_applications": [],
+  "prefer_related_applications": false,
+
+  "protocol_handlers": [
+    {
+      "protocol": "web+almudir",
+      "url": "/?url=%s"
+    }
+  ],
+
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text":  "text",
+      "url":   "url"
+    }
+  },
+
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+
+  "handle_links": "preferred",
+
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  }
+}

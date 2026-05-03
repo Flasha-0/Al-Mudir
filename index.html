@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f0f13" />
+  <meta name="description" content="المدير - بيئة عمل إنتاجية متكاملة" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="المدير" />
+
+  <title>المدير — بيئة العمل الإنتاجية</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+      <rect width='100' height='100' rx='20' fill='%236c63ff'/>
+      <text y='.9em' font-size='80' x='10' fill='white'>م</text>
+    </svg>" />
+
+  <!-- ========== FONTS ========== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- ========== ICONS ========== -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- ========== HIGHLIGHT.JS ========== -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+
+  <!-- ========== KATEX ========== -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+
+  <!-- ========== FULLCALENDAR ========== -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" />
+
+  <!-- ========== MAIN CSS ========== -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="dark-mode" data-theme="dark">
+
+  <!-- ========================================
+       SPLASH SCREEN
+  ========================================= -->
+  <div id="splash-screen" class="splash-screen">
+    <div class="splash-content">
+      <div class="splash-logo">
+        <span class="splash-logo-icon"><i class="fas fa-brain"></i></span>
+        <span class="splash-logo-text">المدير</span>
+      </div>
+      <div class="splash-tagline">بيئة عمل إنتاجية متكاملة</div>
+      <div class="splash-loader">
+        <div class="splash-loader-bar"></div>
+      </div>
+      <div class="splash-version">v2.0.0</div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       APP SHELL
+  ========================================= -->
+  <div id="app" class="app-shell" style="display:none;">
+
+    <!-- ======== SIDEBAR ======== -->
+    <aside id="sidebar" class="sidebar" role="navigation" aria-label="القائمة الرئيسية">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">
+          <div class="brand-icon"><i class="fas fa-brain"></i></div>
+          <div class="brand-info">
+            <span class="brand-name">المدير</span>
+            <span class="brand-tagline">Workspace</span>
+          </div>
+        </div>
+        <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="إغلاق القائمة">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <!-- Online Status -->
+      <div class="online-status-bar" id="onlineStatusBar">
+        <span class="status-dot" id="statusDot"></span>
+        <span class="status-text" id="statusText">متصل</span>
+      </div>
+
+      <!-- Nav Links -->
+      <nav class="sidebar-nav">
+        <ul class="nav-list" role="tablist">
+          <li class="nav-item">
+            <button class="nav-btn active" data-tab="dashboard" role="tab" aria-selected="true" aria-controls="tab-dashboard">
+              <span class="nav-icon"><i class="fas fa-chart-pie"></i></span>
+              <span class="nav-label">لوحة التحكم</span>
+              <span class="nav-badge" id="badge-dashboard"></span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-btn" data-tab="calendar" role="tab" aria-selected="false" aria-controls="tab-calendar">
+              <span class="nav-icon"><i class="fas fa-calendar-alt"></i></span>
+              <span class="nav-label">التقويم</span>
+              <span class="nav-badge" id="badge-calendar"></span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-btn" data-tab="chat" role="tab" aria-selected="false" aria-controls="tab-chat">
+              <span class="nav-icon"><i class="fas fa-robot"></i></span>
+              <span class="nav-label">المحادثة</span>
+              <span class="nav-badge" id="badge-chat"></span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-btn" data-tab="tasks" role="tab" aria-selected="false" aria-controls="tab-tasks">
+              <span class="nav-icon"><i class="fas fa-columns"></i></span>
+              <span class="nav-label">المهام</span>
+              <span class="nav-badge" id="badge-tasks"></span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-btn" data-tab="notes" role="tab" aria-selected="false" aria-controls="tab-notes">
+              <span class="nav-icon"><i class="fas fa-scroll"></i></span>
+              <span class="nav-label">الملاحظات</span>
+              <span class="nav-badge" id="badge-notes"></span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-btn" data-tab="canvas" role="tab" aria-selected="false" aria-controls="tab-canvas">
+              <span class="nav-icon"><i class="fas fa-drafting-compass"></i></span>
+              <span class="nav-label">التخطيط</span>
+              <span class="nav-badge" id="badge-canvas"></span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <!-- Pomodoro Timer -->
+        <div class="pomodoro-widget" id="pomodoroWidget">
+          <div class="pomodoro-header">
+            <span class="pomodoro-icon"><i class="fas fa-clock"></i></span>
+            <span class="pomodoro-title">بومودورو</span>
+            <button class="pomodoro-settings-btn" id="pomodoroSettingsBtn" title="إعدادات">
+              <i class="fas fa-cog"></i>
+            </button>
+          </div>
+          <div class="pomodoro-display">
+            <span class="pomodoro-time" id="pomodoroTime">25:00</span>
+            <span class="pomodoro-phase" id="pomodoroPhase">تركيز</span>
+          </div>
+          <div class="pomodoro-controls">
+            <button class="pomo-btn" id="pomodoroStart" title="تشغيل">
+              <i class="fas fa-play"></i>
+            </button>
+            <button class="pomo-btn" id="pomodoroReset" title="إعادة">
+              <i class="fas fa-redo"></i>
+            </button>
+            <button class="pomo-btn" id="pomodoroSkip" title="تخطي">
+              <i class="fas fa-forward"></i>
+            </button>
+          </div>
+          <div class="pomodoro-progress">
+            <div class="pomodoro-progress-fill" id="pomodoroProgressFill"></div>
+          </div>
+          <div class="pomodoro-sessions">
+            <span class="session-dots" id="sessionDots"></span>
+            <span class="session-count" id="sessionCount">0 / 4 جلسات</span>
+          </div>
+        </div>
+
+        <!-- Autosave Indicator -->
+        <div class="autosave-indicator" id="autosaveIndicator">
+          <span class="autosave-icon" id="autosaveIcon"><i class="fas fa-cloud"></i></span>
+          <span class="autosave-text" id="autosaveText">تم الحفظ</span>
+        </div>
+
+        <!-- Settings & Shortcuts -->
+        <div class="footer-actions">
+          <button class="footer-btn" id="settingsBtn" title="الإعدادات">
+            <i class="fas fa-sliders-h"></i>
+          </button>
+          <button class="footer-btn" id="shortcutsBtn" title="اختصارات لوحة المفاتيح">
+            <i class="fas fa-keyboard"></i>
+          </button>
+          <button class="footer-btn" id="themeToggleBtn" title="تبديل المظهر">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ======== MAIN CONTENT ======== -->
+    <main class="main-content" id="mainContent" role="main">
+
+      <!-- Mobile Top Bar -->
+      <header class="mobile-topbar" id="mobileTopbar">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="فتح القائمة">
+          <i class="fas fa-bars"></i>
+        </button>
+        <span class="mobile-title" id="mobileTitle">لوحة التحكم</span>
+        <button class="mobile-cmd-btn" id="mobileCmdBtn" aria-label="البحث السريع">
+          <i class="fas fa-search"></i>
+        </button>
+      </header>
+
+      <!-- ======================================
+           TAB: DASHBOARD
+      ======================================= -->
+      <section id="tab-dashboard" class="tab-panel active" role="tabpanel" aria-labelledby="nav-dashboard">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h1 class="panel-title"><i class="fas fa-chart-pie"></i> لوحة التحكم</h1>
+            <p class="panel-subtitle">نظرة شاملة على إنتاجيتك اليوم</p>
+          </div>
+          <div class="panel-actions">
+            <button class="action-btn primary" id="exportDataBtn">
+              <i class="fas fa-file-export"></i>
+              <span>تصدير البيانات</span>
+            </button>
+            <button class="action-btn" id="refreshStatsBtn">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Date & Greeting -->
+        <div class="dashboard-greeting" id="dashboardGreeting">
+          <div class="greeting-text">
+            <h2 id="greetingMsg">مرحباً! 👋</h2>
+            <p id="currentDateDisplay"></p>
+          </div>
+          <div class="greeting-quote" id="greetingQuote">
+            <i class="fas fa-quote-right"></i>
+            <span id="quoteText">النجاح ليس مفتاحاً للسعادة، السعادة هي مفتاح النجاح.</span>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-card" id="statTasks">
+            <div class="stat-icon tasks-icon"><i class="fas fa-tasks"></i></div>
+            <div class="stat-body">
+              <span class="stat-label">إجمالي المهام</span>
+              <span class="stat-value" id="statTasksValue">—</span>
+              <span class="stat-change" id="statTasksChange"></span>
+            </div>
+            <div class="stat-sparkline" id="sparkline-tasks"></div>
+          </div>
+
+          <div class="stat-card" id="statNotes">
+            <div class="stat-icon notes-icon"><i class="fas fa-scroll"></i></div>
+            <div class="stat-body">
+              <span class="stat-label">الملاحظات</span>
+              <span class="stat-value" id="statNotesValue">—</span>
+              <span class="stat-change" id="statNotesChange"></span>
+            </div>
+            <div class="stat-sparkline" id="sparkline-notes"></div>
+          </div>
+
+          <div class="stat-card" id="statReminders">
+            <div class="stat-icon reminders-icon"><i class="fas fa-bell"></i></div>
+            <div class="stat-body">
+              <span class="stat-label">التذكيرات النشطة</span>
+              <span class="stat-value" id="statRemindersValue">—</span>
+              <span class="stat-change" id="statRemindersChange"></span>
+            </div>
+            <div class="stat-sparkline" id="sparkline-reminders"></div>
+          </div>
+
+          <div class="stat-card" id="statCompleted">
+            <div class="stat-icon completed-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="stat-body">
+              <span class="stat-label">مكتملة اليوم</span>
+              <span class="stat-value" id="statCompletedValue">—</span>
+              <span class="stat-change" id="statCompletedChange"></span>
+            </div>
+            <div class="stat-sparkline" id="sparkline-completed"></div>
+          </div>
+        </div>
+
+        <!-- Today's Tasks Progress -->
+        <div class="dashboard-section">
+          <div class="section-header">
+            <h3 class="section-title"><i class="fas fa-sun"></i> مهام اليوم</h3>
+            <button class="section-link" data-goto="tasks">عرض الكل <i class="fas fa-arrow-left"></i></button>
+          </div>
+          <div class="today-progress-card">
+            <div class="progress-header">
+              <span class="progress-label" id="todayProgressLabel">0 من 0 مهمة مكتملة</span>
+              <span class="progress-percent" id="todayProgressPercent">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="todayProgressFill" style="width:0%"></div>
+            </div>
+            <div class="today-tasks-list" id="todayTasksList">
+              <div class="empty-state-mini">
+                <i class="fas fa-coffee"></i>
+                <span>لا توجد مهام لليوم</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Two Columns: Recent Notes + Upcoming Reminders -->
+        <div class="dashboard-two-col">
+          <div class="dashboard-section">
+            <div class="section-header">
+              <h3 class="section-title"><i class="fas fa-clock-rotate-left"></i> آخر الملاحظات</h3>
+              <button class="section-link" data-goto="notes">عرض الكل <i class="fas fa-arrow-left"></i></button>
+            </div>
+            <div class="recent-notes-list" id="recentNotesList">
+              <div class="empty-state-mini"><i class="fas fa-sticky-note"></i><span>لا توجد ملاحظات</span></div>
+            </div>
+          </div>
+
+          <div class="dashboard-section">
+            <div class="section-header">
+              <h3 class="section-title"><i class="fas fa-bell"></i> التذكيرات القادمة</h3>
+              <button class="section-link" data-goto="calendar">عرض الكل <i class="fas fa-arrow-left"></i></button>
+            </div>
+            <div class="upcoming-reminders-list" id="upcomingRemindersList">
+              <div class="empty-state-mini"><i class="fas fa-bell-slash"></i><span>لا توجد تذكيرات</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Heatmap Placeholder -->
+        <div class="dashboard-section">
+          <div class="section-header">
+            <h3 class="section-title"><i class="fas fa-fire"></i> نشاطك الأسبوعي</h3>
+          </div>
+          <div class="activity-heatmap" id="activityHeatmap"></div>
+        </div>
+      </section>
+
+      <!-- ======================================
+           TAB: CALENDAR
+      ======================================= -->
+      <section id="tab-calendar" class="tab-panel" role="tabpanel" aria-labelledby="nav-calendar">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h1 class="panel-title"><i class="fas fa-calendar-alt"></i> التقويم</h1>
+            <p class="panel-subtitle">إدارة مهامك وتذكيراتك بشكل مرئي</p>
+          </div>
+          <div class="panel-actions">
+            <div class="calendar-view-switcher" id="calViewSwitcher">
+              <button class="view-btn active" data-view="dayGridMonth">شهر</button>
+              <button class="view-btn" data-view="timeGridWeek">أسبوع</button>
+              <button class="view-btn" data-view="timeGridDay">يوم</button>
+              <button class="view-btn" data-view="listWeek">قائمة</button>
+            </div>
+            <button class="action-btn primary" id="addEventBtn">
+              <i class="fas fa-plus"></i>
+              <span>إضافة حدث</span>
+            </button>
+          </div>
+        </div>
+        <div class="calendar-wrapper">
+          <div id="fullCalendar"></div>
+        </div>
+      </section>
+
+      <!-- ======================================
+           TAB: CHAT (The Manager AI)
+      ======================================= -->
+      <section id="tab-chat" class="tab-panel" role="tabpanel" aria-labelledby="nav-chat">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h1 class="panel-title">
+              <i class="fas fa-robot"></i> المدير AI
+              <span class="ai-status-badge" id="aiStatusBadge">
+                <span class="pulse-dot"></span> نشط
+              </span>
+            </h1>
+            <p class="panel-subtitle">مساعدك الذكي لتنظيم وإدارة مهامك</p>
+          </div>
+          <div class="panel-actions">
+            <button class="action-btn" id="clearChatBtn" title="مسح المحادثة">
+              <i class="fas fa-trash-alt"></i>
+              <span>مسح</span>
+            </button>
+            <button class="action-btn" id="exportChatBtn" title="تصدير المحادثة">
+              <i class="fas fa-download"></i>
+            </button>
+            <button class="action-btn" id="chatVoiceToggle" title="تفعيل/إيقاف النطق">
+              <i class="fas fa-volume-up"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+          <!-- Chat Messages -->
+          <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-label="سجل المحادثة">
+            <!-- Welcome Message -->
+            <div class="chat-message ai-message welcome-message">
+              <div class="message-avatar">
+                <i class="fas fa-brain"></i>
+              </div>
+              <div class="message-content">
+                <div class="message-header">
+                  <span class="message-sender">المدير AI</span>
+                  <span class="message-time" data-timestamp="now"></span>
+                </div>
+                <div class="message-body">
+                  <p>مرحباً! أنا <strong>المدير</strong> — مساعدك الذكي المتكامل. 🧠</p>
+                  <p>يمكنني مساعدتك في:</p>
+                  <ul>
+                    <li>📝 إنشاء وإدارة المهام والملاحظات</li>
+                    <li>📅 تنظيم جدولك اليومي</li>
+                    <li>💡 الإجابة على أسئلتك وتحليل أفكارك</li>
+                    <li>⚡ تنفيذ الأوامر الصوتية</li>
+                  </ul>
+                  <p>كيف يمكنني مساعدتك اليوم؟</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Suggestions -->
+          <div class="chat-suggestions" id="chatSuggestions">
+            <button class="suggestion-chip" data-msg="أرني ملخص مهامي اليوم">📋 ملخص مهام اليوم</button>
+            <button class="suggestion-chip" data-msg="ساعدني في التخطيط لأسبوع منتج">📅 التخطيط الأسبوعي</button>
+            <button class="suggestion-chip" data-msg="أضف مهمة جديدة لي">➕ إضافة مهمة</button>
+            <button class="suggestion-chip" data-msg="ما هي نصائحك للتركيز والإنتاجية؟">💡 نصائح الإنتاجية</button>
+          </div>
+
+          <!-- Chat Input Area -->
+          <div class="chat-input-area" id="chatInputArea">
+            <div class="chat-input-wrapper">
+              <button class="chat-tool-btn" id="chatAttachBtn" title="إرفاق ملف">
+                <i class="fas fa-paperclip"></i>
+              </button>
+              <textarea
+                class="chat-input"
+                id="chatInput"
+                placeholder="اكتب رسالتك هنا... (Shift+Enter للسطر الجديد)"
+                rows="1"
+                aria-label="حقل إدخال الرسالة"
+                maxlength="4000"
+              ></textarea>
+              <div class="chat-input-actions">
+                <button class="chat-tool-btn mic-btn" id="chatMicBtn" title="التحدث بالصوت" aria-label="تسجيل صوتي">
+                  <i class="fas fa-microphone"></i>
+                </button>
+                <button class="chat-send-btn" id="chatSendBtn" title="إرسال (Enter)" aria-label="إرسال الرسالة">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+            <div class="chat-meta">
+              <span class="char-counter" id="charCounter">0 / 4000</span>
+              <span class="typing-indicator" id="typingIndicator" style="display:none;">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                المدير يكتب...
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================
+           TAB: TASKS (Kanban Board)
+      ======================================= -->
+      <section id="tab-tasks" class="tab-panel" role="tabpanel" aria-labelledby="nav-tasks">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h1 class="panel-title"><i class="fas fa-columns"></i> لوحة المهام</h1>
+            <p class="panel-subtitle">نظّم مهامك بنظام كانبان</p>
+          </div>
+          <div class="panel-actions">
+            <div class="search-box-mini">
+              <i class="fas fa-search"></i>
+              <input type="text" id="taskSearchInput" placeholder="بحث في المهام..." aria-label="بحث المهام" />
+            </div>
+            <div class="filter-group">
+              <select id="taskFilterPriority" class="filter-select" aria-label="فلتر الأولوية">
+                <option value="">كل الأولويات</option>
+                <option value="urgent">عاجل 🔴</option>
+                <option value="high">مرتفع 🟠</option>
+                <option value="medium">متوسط 🟡</option>
+                <option value="low">منخفض 🟢</option>
+              </select>
+            </div>
+            <button class="action-btn primary" id="addTaskBtnMain">
+              <i class="fas fa-plus"></i>
+              <span>مهمة جديدة</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Kanban Board -->
+        <div class="kanban-board" id="kanbanBoard" role="region" aria-label="لوحة كانبان">
+          <!-- Column: Todo -->
+          <div class="kanban-column" id="col-todo" data-status="todo">
+            <div class="column-header">
+              <div class="column-title-group">
+                <span class="column-dot todo-dot"></span>
+                <h3 class="column-title">للبدء</h3>
+                <span class="column-count" id="count-todo">0</span>
+              </div>
+              <button class="column-add-btn" data-status="todo" title="إضافة مهمة">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div class="kanban-cards" id="cards-todo" data-status="todo">
+              <!-- Cards injected by JS -->
+            </div>
+          </div>
+
+          <!-- Column: In Progress -->
+          <div class="kanban-column" id="col-inprogress" data-status="inprogress">
+            <div class="column-header">
+              <div class="column-title-group">
+                <span class="column-dot inprogress-dot"></span>
+                <h3 class="column-title">قيد التنفيذ</h3>
+                <span class="column-count" id="count-inprogress">0</span>
+              </div>
+              <button class="column-add-btn" data-status="inprogress" title="إضافة مهمة">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div class="kanban-cards" id="cards-inprogress" data-status="inprogress">
+            </div>
+          </div>
+
+          <!-- Column: Review -->
+          <div class="kanban-column" id="col-review" data-status="review">
+            <div class="column-header">
+              <div class="column-title-group">
+                <span class="column-dot review-dot"></span>
+                <h3 class="column-title">للمراجعة</h3>
+                <span class="column-count" id="count-review">0</span>
+              </div>
+              <button class="column-add-btn" data-status="review" title="إضافة مهمة">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div class="kanban-cards" id="cards-review" data-status="review">
+            </div>
+          </div>
+
+          <!-- Column: Done -->
+          <div class="kanban-column" id="col-done" data-status="done">
+            <div class="column-header">
+              <div class="column-title-group">
+                <span class="column-dot done-dot"></span>
+                <h3 class="column-title">مكتملة</h3>
+                <span class="column-count" id="count-done">0</span>
+              </div>
+              <button class="column-add-btn" data-status="done" title="إضافة مهمة">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div class="kanban-cards" id="cards-done" data-status="done">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================
+           TAB: NOTES (Obsidian Style)
+      ======================================= -->
+      <section id="tab-notes" class="tab-panel" role="tabpanel" aria-labelledby="nav-notes">
+        <div class="notes-layout" id="notesLayout">
+
+          <!-- Notes Sidebar (File Tree) -->
+          <aside class="notes-sidebar" id="notesSidebar">
+            <div class="notes-sidebar-header">
+              <h3><i class="fas fa-folder-open"></i> ملاحظاتي</h3>
+              <div class="notes-sidebar-actions">
+                <button class="icon-btn" id="addNoteBtn" title="ملاحظة جديدة">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <button class="icon-btn" id="searchNotesBtn" title="بحث">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+            <div class="notes-search-box" id="notesSearchBox" style="display:none;">
+              <input type="text" id="notesSearchInput" placeholder="بحث في الملاحظات..." aria-label="بحث الملاحظات" />
+            </div>
+            <div class="notes-list" id="notesList">
+              <!-- Notes injected by JS -->
+            </div>
+          </aside>
+
+          <!-- Notes Editor Area -->
+          <div class="notes-editor-area" id="notesEditorArea">
+            <!-- Empty State -->
+            <div class="notes-empty-state" id="notesEmptyState">
+              <div class="empty-icon"><i class="fas fa-scroll"></i></div>
+              <h3>اختر ملاحظة أو أنشئ واحدة جديدة</h3>
+              <p>ابدأ بكتابة أفكارك وإلهاماتك</p>
+              <button class="action-btn primary" id="createFirstNoteBtn">
+                <i class="fas fa-plus"></i> إنشاء ملاحظة
+              </button>
+            </div>
+
+            <!-- Active Note Editor -->
+            <div class="notes-editor-container" id="notesEditorContainer" style="display:none;">
+              <!-- Note Toolbar -->
+              <div class="note-toolbar" id="noteToolbar">
+                <div class="note-title-area">
+                  <input
+                    type="text"
+                    class="note-title-input"
+                    id="noteTitleInput"
+                    placeholder="عنوان الملاحظة..."
+                    aria-label="عنوان الملاحظة"
+                  />
+                  <span class="note-saved-badge" id="noteSavedBadge">
+                    <i class="fas fa-check"></i> محفوظة
+                  </span>
+                </div>
+                <div class="toolbar-actions">
+                  <!-- Formatting Buttons -->
+                  <div class="format-group">
+                    <button class="toolbar-btn" data-action="bold" title="غامق (Ctrl+B)"><i class="fas fa-bold"></i></button>
+                    <button class="toolbar-btn" data-action="italic" title="مائل (Ctrl+I)"><i class="fas fa-italic"></i></button>
+                    <button class="toolbar-btn" data-action="strikethrough" title="يتوسطه خط"><i class="fas fa-strikethrough"></i></button>
+                    <button class="toolbar-btn" data-action="code" title="كود مضمن"><i class="fas fa-code"></i></button>
+                    <button class="toolbar-btn" data-action="link" title="رابط"><i class="fas fa-link"></i></button>
+                    <button class="toolbar-btn" data-action="math" title="معادلة رياضية"><i class="fas fa-square-root-variable"></i></button>
+                    <button class="toolbar-btn" data-action="table" title="جدول"><i class="fas fa-table"></i></button>
+                  </div>
+                  <div class="toolbar-separator"></div>
+                  <!-- View Buttons -->
+                  <div class="view-group" id="noteViewGroup">
+                    <button class="toolbar-btn active" id="viewEdit" title="محرر" data-view="edit">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="toolbar-btn" id="viewSplit" title="عرض مقسّم" data-view="split">
+                      <i class="fas fa-columns"></i>
+                    </button>
+                    <button class="toolbar-btn" id="viewPreview" title="معاينة" data-view="preview">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="toolbar-separator"></div>
+                  <!-- Extra Actions -->
+                  <button class="toolbar-btn" id="tocToggleBtn" title="فهرس المحتويات">
+                    <i class="fas fa-list-ul"></i>
+                  </button>
+                  <button class="toolbar-btn" id="zenModeBtn" title="وضع التركيز (F11)">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                  </button>
+                  <button class="toolbar-btn" id="exportNoteBtn" title="تصدير كـ Markdown">
+                    <i class="fas fa-file-download"></i>
+                  </button>
+                  <button class="toolbar-btn danger" id="deleteNoteBtn" title="حذف الملاحظة">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Note Tags -->
+              <div class="note-tags-bar" id="noteTagsBar">
+                <span class="tags-label"><i class="fas fa-tags"></i></span>
+                <div class="tags-list" id="noteTagsList"></div>
+                <input type="text" class="tag-input" id="tagInput" placeholder="أضف وسمًا..." />
+              </div>
+
+              <!-- TOC Panel -->
+              <div class="toc-panel" id="tocPanel" style="display:none;">
+                <div class="toc-header">
+                  <span>فهرس المحتويات</span>
+                  <button class="icon-btn" id="tocCloseBtn"><i class="fas fa-times"></i></button>
+                </div>
+                <ul class="toc-list" id="tocList"></ul>
+              </div>
+
+              <!-- Note Content (Split View) -->
+              <div class="note-content-area" id="noteContentArea">
+                <div class="note-editor-pane" id="noteEditorPane">
+                  <textarea
+                    class="note-editor"
+                    id="noteEditor"
+                    placeholder="ابدأ الكتابة... (يدعم Markdown، KaTeX للمعادلات، و [[اسم ملاحظة]] للربط)"
+                    aria-label="محرر الملاحظات"
+                    spellcheck="true"
+                  ></textarea>
+                </div>
+                <div class="note-preview-pane" id="notePreviewPane" style="display:none;">
+                  <div class="note-preview" id="notePreview" aria-live="polite"></div>
+                </div>
+              </div>
+
+              <!-- Note Footer -->
+              <div class="note-footer">
+                <span class="note-meta" id="noteWordCount">0 كلمة</span>
+                <span class="note-meta" id="noteCharCount">0 حرف</span>
+                <span class="note-meta" id="noteLastEdited"></span>
+                <span class="note-meta" id="noteReadTime"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================
+           TAB: CANVAS (Excalidraw)
+      ======================================= -->
+      <section id="tab-canvas" class="tab-panel" role="tabpanel" aria-labelledby="nav-canvas">
+        <div class="panel-header canvas-panel-header">
+          <div class="panel-title-group">
+            <h1 class="panel-title"><i class="fas fa-drafting-compass"></i> لوحة التخطيط</h1>
+            <p class="panel-subtitle">ارسم أفكارك ومخططاتك بحرية</p>
+          </div>
+          <div class="panel-actions">
+            <button class="action-btn" id="reloadCanvasBtn">
+              <i class="fas fa-redo"></i>
+              <span>إعادة تحميل</span>
+            </button>
+            <button class="action-btn" id="fullscreenCanvasBtn">
+              <i class="fas fa-expand"></i>
+              <span>ملء الشاشة</span>
+            </button>
+          </div>
+        </div>
+        <div class="canvas-wrapper" id="canvasWrapper">
+          <div class="canvas-loading" id="canvasLoading">
+            <div class="canvas-loader-spinner"></div>
+            <p>جاري تحميل لوحة الرسم...</p>
+          </div>
+          <iframe
+            id="excalidrawFrame"
+            src="https://excalidraw.com/"
+            title="لوحة الرسم Excalidraw"
+            allowfullscreen
+            style="display:none;"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+          ></iframe>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ========================================
+       FLOATING ACTION BUTTON (FAB)
+  ========================================= -->
+  <div class="fab-container" id="fabContainer" aria-label="إجراءات سريعة">
+    <button class="fab-main" id="fabMain" aria-label="فتح الإجراءات السريعة" aria-expanded="false">
+      <i class="fas fa-plus" id="fabIcon"></i>
+    </button>
+    <div class="fab-menu" id="fabMenu" role="menu">
+      <button class="fab-item" id="fabAddTask" role="menuitem" title="إضافة مهمة">
+        <span class="fab-item-label">مهمة جديدة</span>
+        <span class="fab-item-icon"><i class="fas fa-tasks"></i></span>
+      </button>
+      <button class="fab-item" id="fabAddNote" role="menuitem" title="إضافة ملاحظة">
+        <span class="fab-item-label">ملاحظة جديدة</span>
+        <span class="fab-item-icon"><i class="fas fa-scroll"></i></span>
+      </button>
+      <button class="fab-item" id="fabAddReminder" role="menuitem" title="إضافة تذكير">
+        <span class="fab-item-label">تذكير جديد</span>
+        <span class="fab-item-icon"><i class="fas fa-bell"></i></span>
+      </button>
+      <button class="fab-item" id="fabOpenChat" role="menuitem" title="فتح المحادثة">
+        <span class="fab-item-label">سؤال سريع</span>
+        <span class="fab-item-icon"><i class="fas fa-robot"></i></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================
+       COMMAND PALETTE (Ctrl+K)
+  ========================================= -->
+  <div class="modal-overlay" id="cmdPaletteOverlay" role="dialog" aria-modal="true" aria-label="لوحة الأوامر" style="display:none;">
+    <div class="command-palette" id="commandPalette">
+      <div class="cmd-search-wrapper">
+        <i class="fas fa-search cmd-search-icon"></i>
+        <input
+          type="text"
+          class="cmd-search-input"
+          id="cmdSearchInput"
+          placeholder="ابحث عن أوامر، مهام، ملاحظات..."
+          aria-label="البحث في الأوامر"
+          autocomplete="off"
+        />
+        <kbd class="cmd-hint">ESC</kbd>
+      </div>
+      <div class="cmd-results" id="cmdResults" role="listbox" aria-label="نتائج البحث">
+        <!-- Groups injected by JS -->
+      </div>
+      <div class="cmd-footer">
+        <span><kbd>↑↓</kbd> للتنقل</span>
+        <span><kbd>Enter</kbd> للتنفيذ</span>
+        <span><kbd>ESC</kbd> للإغلاق</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       MODAL: ADD / EDIT TASK
+  ========================================= -->
+  <div class="modal-overlay" id="taskModalOverlay" role="dialog" aria-modal="true" aria-labelledby="taskModalTitle" style="display:none;">
+    <div class="modal glass-modal" id="taskModal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="taskModalTitle">
+          <i class="fas fa-tasks"></i> إضافة مهمة جديدة
+        </h2>
+        <button class="modal-close" id="taskModalClose" aria-label="إغلاق">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="taskForm" novalidate>
+          <input type="hidden" id="taskId" />
+
+          <!-- Title -->
+          <div class="form-group">
+            <label for="taskTitle" class="form-label">
+              <i class="fas fa-heading"></i> عنوان المهمة <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="taskTitle"
+              class="form-input"
+              placeholder="ماذا تريد أن تفعل؟"
+              required
+              maxlength="200"
+              aria-required="true"
+            />
+          </div>
+
+          <!-- Description -->
+          <div class="form-group">
+            <label for="taskDescription" class="form-label">
+              <i class="fas fa-align-left"></i> الوصف
+            </label>
+            <textarea
+              id="taskDescription"
+              class="form-textarea"
+              placeholder="أضف وصفاً تفصيلياً (يدعم Markdown)..."
+              rows="3"
+              maxlength="2000"
+            ></textarea>
+          </div>
+
+          <!-- Row: Priority + Status -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="taskPriority" class="form-label">
+                <i class="fas fa-flag"></i> الأولوية
+              </label>
+              <select id="taskPriority" class="form-select">
+                <option value="low">🟢 منخفض</option>
+                <option value="medium" selected>🟡 متوسط</option>
+                <option value="high">🟠 مرتفع</option>
+                <option value="urgent">🔴 عاجل</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="taskStatus" class="form-label">
+                <i class="fas fa-layer-group"></i> الحالة
+              </label>
+              <select id="taskStatus" class="form-select">
+                <option value="todo" selected>للبدء</option>
+                <option value="inprogress">قيد التنفيذ</option>
+                <option value="review">للمراجعة</option>
+                <option value="done">مكتملة</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Row: Due Date + Estimated Time -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="taskDueDate" class="form-label">
+                <i class="fas fa-calendar"></i> تاريخ الاستحقاق
+              </label>
+              <input type="datetime-local" id="taskDueDate" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label for="taskEstimate" class="form-label">
+                <i class="fas fa-hourglass-half"></i> الوقت المقدر (دقائق)
+              </label>
+              <input type="number" id="taskEstimate" class="form-input" placeholder="30" min="1" max="9999" />
+            </div>
+          </div>
+
+          <!-- Tags -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-tags"></i> الوسوم
+            </label>
+            <div class="tags-input-container" id="taskTagsContainer">
+              <div class="tags-display" id="taskTagsDisplay"></div>
+              <input type="text" id="taskTagInput" class="tags-text-input" placeholder="أضف وسمًا واضغط Enter..." />
+            </div>
+          </div>
+
+          <!-- Checklist (Sub-tasks) -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-list-check"></i> المهام الفرعية
+              <button type="button" class="add-subtask-btn" id="addSubtaskBtn">
+                <i class="fas fa-plus"></i> إضافة
+              </button>
+            </label>
+            <div class="subtask-list" id="subtaskList">
+              <!-- Subtasks injected by JS -->
+            </div>
+          </div>
+
+          <!-- Color Label -->
+          <div class="form-group">
+            <label class="form-label"><i class="fas fa-palette"></i> لون البطاقة</label>
+            <div class="color-picker" id="taskColorPicker">
+              <button type="button" class="color-dot active" data-color="default" style="background:#2d2d3a;" title="افتراضي"></button>
+              <button type="button" class="color-dot" data-color="red" style="background:#ff6b6b;" title="أحمر"></button>
+              <button type="button" class="color-dot" data-color="orange" style="background:#ff9f43;" title="برتقالي"></button>
+              <button type="button" class="color-dot" data-color="yellow" style="background:#feca57;" title="أصفر"></button>
+              <button type="button" class="color-dot" data-color="green" style="background:#48dbfb;" title="أخضر"></button>
+              <button type="button" class="color-dot" data-color="blue" style="background:#6c63ff;" title="أزرق"></button>
+              <button type="button" class="color-dot" data-color="purple" style="background:#a55eea;" title="بنفسجي"></button>
+              <button type="button" class="color-dot" data-color="pink" style="background:#fd79a8;" title="وردي"></button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="taskModalCancel">إلغاء</button>
+        <button class="btn btn-primary" id="taskModalSave">
+          <i class="fas fa-save"></i> حفظ المهمة
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       MODAL: ADD / EDIT NOTE
+  ========================================= -->
+  <div class="modal-overlay" id="noteModalOverlay" role="dialog" aria-modal="true" aria-labelledby="noteModalTitle" style="display:none;">
+    <div class="modal glass-modal" id="noteModal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="noteModalTitle">
+          <i class="fas fa-scroll"></i> ملاحظة جديدة
+        </h2>
+        <button class="modal-close" id="noteModalClose" aria-label="إغلاق">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="noteForm" novalidate>
+          <div class="form-group">
+            <label for="noteModalTitle_input" class="form-label">
+              <i class="fas fa-heading"></i> عنوان الملاحظة <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="noteModalTitle_input"
+              class="form-input"
+              placeholder="عنوان الملاحظة..."
+              required
+              maxlength="200"
+            />
+          </div>
+          <div class="form-group">
+            <label for="noteModalContent" class="form-label">
+              <i class="fas fa-align-left"></i> المحتوى الأولي
+            </label>
+            <textarea
+              id="noteModalContent"
+              class="form-textarea"
+              placeholder="ابدأ الكتابة... (يدعم Markdown)"
+              rows="6"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="noteModalFolder" class="form-label">
+              <i class="fas fa-folder"></i> المجلد
+            </label>
+            <select id="noteModalFolder" class="form-select">
+              <option value="general">عام</option>
+              <option value="work">عمل</option>
+              <option value="personal">شخصي</option>
+              <option value="ideas">أفكار</option>
+              <option value="research">بحث</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="noteModalCancel">إلغاء</button>
+        <button class="btn btn-primary" id="noteModalSave">
+          <i class="fas fa-save"></i> إنشاء الملاحظة
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       MODAL: ADD REMINDER / EVENT
+  ========================================= -->
+  <div class="modal-overlay" id="reminderModalOverlay" role="dialog" aria-modal="true" aria-labelledby="reminderModalTitle" style="display:none;">
+    <div class="modal glass-modal" id="reminderModal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="reminderModalTitle">
+          <i class="fas fa-bell"></i> إضافة تذكير / حدث
+        </h2>
+        <button class="modal-close" id="reminderModalClose" aria-label="إغلاق">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="reminderForm" novalidate>
+          <div class="form-group">
+            <label for="reminderTitle" class="form-label">
+              <i class="fas fa-heading"></i> العنوان <span class="required">*</span>
+            </label>
+            <input type="text" id="reminderTitle" class="form-input" placeholder="عنوان التذكير..." required maxlength="200" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="reminderDate" class="form-label">
+                <i class="fas fa-calendar"></i> التاريخ والوقت <span class="required">*</span>
+              </label>
+              <input type="datetime-local" id="reminderDate" class="form-input" required />
+            </div>
+            <div class="form-group">
+              <label for="reminderType" class="form-label">
+                <i class="fas fa-tag"></i> النوع
+              </label>
+              <select id="reminderType" class="form-select">
+                <option value="reminder">تذكير</option>
+                <option value="meeting">اجتماع</option>
+                <option value="deadline">موعد نهائي</option>
+                <option value="event">حدث</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="reminderNotes" class="form-label">
+              <i class="fas fa-sticky-note"></i> ملاحظات
+            </label>
+            <textarea id="reminderNotes" class="form-textarea" placeholder="ملاحظات إضافية..." rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label"><i class="fas fa-bell"></i> إشعار متقدم بـ</label>
+            <div class="form-row">
+              <select id="reminderAdvanceAmount" class="form-select">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15" selected>15</option>
+                <option value="30">30</option>
+                <option value="60">60</option>
+              </select>
+              <select id="reminderAdvanceUnit" class="form-select">
+                <option value="minutes">دقيقة</option>
+                <option value="hours">ساعة</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="reminderModalCancel">إلغاء</button>
+        <button class="btn btn-primary" id="reminderModalSave">
+          <i class="fas fa-save"></i> حفظ التذكير
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       MODAL: TASK DETAIL / EDIT (Full View)
+  ========================================= -->
+  <div class="modal-overlay" id="taskDetailOverlay" role="dialog" aria-modal="true" aria-labelledby="taskDetailTitle" style="display:none;">
+    <div class="modal glass-modal modal-large" id="taskDetailModal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="taskDetailTitle">
+          <i class="fas fa-expand-alt"></i> تفاصيل المهمة
+        </h2>
+        <div class="modal-header-actions">
+          <button class="icon-btn" id="editTaskDetailBtn" title="تعديل">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="modal-close" id="taskDetailClose" aria-label="إغلاق">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body" id="taskDetailBody">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       MODAL: POMODORO SETTINGS
+  ========================================= -->
+  <div class="modal-overlay" id="pomodoroSettingsOverlay" role="dialog" aria-modal="true" aria-labelledby="pomodoroSettingsTitle" style="display:none;">
+    <div class="modal glass-modal modal-small" id="pomodoroSettingsModal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="pomodoroSettingsTitle">
+          <i class="fas fa-clock"></i> إعدادات بومودورو
+        </h2>
+        <button class="modal-close" id="pomodoroSettingsClose" aria-label="إغلاق">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="pomoDuration" class="form-label">مدة التركيز (دقائق)</label>
+          <input type="number" id="pomoDuration" class="form-input" value="25" min="1" max="90" />
+        </div>
+        <div class="form-group">
+          <label for="pomoShortBreak" class="form-label">استراحة قصيرة (دقائق)</label>
+          <input type="number" id="pomoShortBreak" class="form-input" value="5" min="1" max="30" />
+        </div>
+        <div class="form-group">
+          <label for="pomoLongBreak" class="form-label">استراحة طويلة (دقائق)</label>
+          <input type="number" id="pomoLongBreak" class="form-input" value="15" min="1" max="60" />
+        </div>
+        <div class="form-group">
+          <label for="pomoSessions" class="form-label">جلسات قبل الاستراحة الطويلة</label>
+          <input type="number" id="pomoSessions" class="form-input" value="4" min="2" max="8" />
+        </div>
+        <div class="form-group">
+          <div class="toggle-row">
+            <label class="form-label">صوت التنبيه</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="pomoSound" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="toggle-row">
+            <label class="form-label">إشعار المتصفح</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="pomoNotify" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="pomodoroSettingsCancel">إلغاء</button>
+        <button class="btn btn-primary" id="pomodoroSettingsSave">
+          <i class="fas fa-save"></i> حفظ الإعدادات
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       MODAL: KEYBOARD SHORTCUTS
+  ========================================= -->
+  <div class="modal-overlay" id="shortcutsModalOverlay" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle" style="display:none;">
+    <div class="modal glass-modal" id="shortcutsModal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="shortcutsTitle">
+          <i class="fas fa-keyboard"></i> اختصارات لوحة المفاتيح
+        </h2>
+        <button class="modal-close" id="shortcutsModalClose" aria-label="إغلاق">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcuts-grid">
+          <div class="shortcut-category">
+            <h4 class="shortcut-cat-title">تنقل عام</h4>
+            <div class="shortcut-item"><kbd>Ctrl</kbd><kbd>K</kbd><span>لوحة الأوامر</span></div>
+            <div class="shortcut-item"><kbd>Ctrl</kbd><kbd>1-6</kbd><span>التبديل بين الأقسام</span></div>
+            <div class="shortcut-item"><kbd>ESC</kbd><span>إغلاق النوافذ</span></div>
+            <div class="shortcut-item"><kbd>Ctrl</kbd><kbd>S</kbd><span>حفظ سريع</span></div>
+          </div>
+          <div class="shortcut-category">
+            <h4 class="shortcut-cat-title">الملاحظات</h4>
+            <div class="shortcut-item"><kbd>Ctrl</kbd><kbd>B</kbd><span>غامق</span></div>
+            <div class="shortcut-item"><kbd>Ctrl</kbd><kbd>I</kbd><span>مائل</span></div>
+            <div class="shortcut-item"><kbd>F11</kbd><span>وضع التركيز</span></div>
+            <div class="shortcut-item"><kbd>Ctrl</kbd><kbd>E</kbd><span>تصدير الملاحظة</span></div>
+          </div>
+          <div class="shortcut-category">
+            <h4 class="shortcut-cat-title">بومودورو</h4>
+            <div class="shortcut-item"><kbd>Space</kbd><span>تشغيل/إيقاف (في الـ Widget)</span></div>
+          </div>
+          <div class="shortcut-category">
+            <h4 class="shortcut-cat-title">المحادثة</h4>
+            <div class="shortcut-item"><kbd>Enter</kbd><span>إرسال الرسالة</span></div>
+            <div class="shortcut-item"><kbd>Shift</kbd><kbd>Enter</kbd><span>سطر جديد</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="shortcutsModalOk">فهمت!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       MODAL: SETTINGS
+  ========================================= -->
+  <div class="modal-overlay" id="settingsModalOverlay" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" style="display:none;">
+    <div class="modal glass-modal" id="settingsModal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="settingsTitle">
+          <i class="fas fa-sliders-h"></i> الإعدادات
+        </h2>
+        <button class="modal-close" id="settingsModalClose" aria-label="إغلاق">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body settings-body">
+        <!-- Tabs within settings -->
+        <div class="settings-tabs">
+          <button class="settings-tab active" data-settings-tab="appearance">المظهر</button>
+          <button class="settings-tab" data-settings-tab="notifications">الإشعارات</button>
+          <button class="settings-tab" data-settings-tab="data">البيانات</button>
+          <button class="settings-tab" data-settings-tab="about">حول</button>
+        </div>
+
+        <!-- Appearance -->
+        <div class="settings-panel active" id="settings-appearance">
+          <div class="setting-row">
+            <div class="setting-info">
+              <span class="setting-label">المظهر الداكن</span>
+              <span class="setting-desc">تفعيل الوضع الليلي</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="settingDarkMode" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <span class="setting-label">حجم الخط</span>
+              <span class="setting-desc">حجم خط واجهة التطبيق</span>
+            </div>
+            <select class="form-select setting-control" id="settingFontSize">
+              <option value="14">صغير (14px)</option>
+              <option value="16" selected>متوسط (16px)</option>
+              <option value="18">كبير (18px)</option>
+              <option value="20">أكبر (20px)</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <span class="setting-label">لون التمييز</span>
+              <span class="setting-desc">لون العناصر الرئيسية</span>
+            </div>
+            <div class="accent-colors" id="accentColors">
+              <button class="accent-dot active" data-accent="#6c63ff" style="background:#6c63ff;" title="بنفسجي"></button>
+              <button class="accent-dot" data-accent="#00d2ff" style="background:#00d2ff;" title="أزرق سماوي"></button>
+              <button class="accent-dot" data-accent="#ff6b6b" style="background:#ff6b6b;" title="أحمر وردي"></button>
+              <button class="accent-dot" data-accent="#48dbfb" style="background:#48dbfb;" title="فيروزي"></button>
+              <button class="accent-dot" data-accent="#ff9f43" style="background:#ff9f43;" title="برتقالي"></button>
+              <button class="accent-dot" data-accent="#55efc4" style="background:#55efc4;" title="أخضر نعناع"></button>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <span class="setting-label">الشريط الجانبي</span>
+              <span class="setting-desc">إظهار نصوص القائمة</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="settingSidebarLabels" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="settings-panel" id="settings-notifications">
+          <div class="setting-row">
+            <div class="setting-info">
+              <span class="setting-label">إشعارات المتصفح</span>
+              <span class="setting-desc">تلقي إشعارات التذكيرات</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="settingBrowserNotif" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <span class="setting-label">صوت التنبيهات</span>
+              <span class="setting-desc">تشغيل صوت عند التذكير</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="settingSoundNotif" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <button class="btn btn-outline" id="requestNotifPermBtn">
+            <i class="fas fa-bell"></i> طلب إذن الإشعارات
+          </button>
+        </div>
+
+        <!-- Data -->
+        <div class="settings-panel" id="settings-data">
+          <div class="setting-row">
+            <div class="setting-info">
+              <span class="setting-label">المزامنة التلقائية</span>
+              <span class="setting-desc">مزامنة البيانات مع الخادم</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="settingAutoSync" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="setting-actions">
+            <button class="btn btn-outline" id="exportAllDataBtn">
+              <i class="fas fa-file-export"></i> تصدير كل البيانات (JSON)
+            </button>
+            <button class="btn btn-outline" id="importDataBtn">
+              <i class="fas fa-file-import"></i> استيراد البيانات
+            </button>
+            <button class="btn btn-danger" id="clearLocalDataBtn">
+              <i class="fas fa-trash"></i> مسح البيانات المحلية
+            </button>
+          </div>
+        </div>
+
+        <!-- About -->
+        <div class="settings-panel" id="settings-about">
+          <div class="about-card">
+            <div class="about-logo">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3>المدير — Workspace</h3>
+            <p class="about-version">الإصدار 2.0.0</p>
+            <p class="about-desc">بيئة عمل إنتاجية متكاملة مع مساعد ذكاء اصطناعي</p>
+            <div class="about-stack">
+              <span class="stack-badge">HTML5</span>
+              <span class="stack-badge">CSS3</span>
+              <span class="stack-badge">Vanilla JS</span>
+              <span class="stack-badge">Flask API</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       MODAL: CONFIRM DELETE
+  ========================================= -->
+  <div class="modal-overlay" id="confirmModalOverlay" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" style="display:none;">
+    <div class="modal glass-modal modal-small" id="confirmModal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="confirmTitle">
+          <i class="fas fa-exclamation-triangle text-warning"></i> تأكيد الحذف
+        </h2>
+      </div>
+      <div class="modal-body">
+        <p id="confirmMessage">هل أنت متأكد من حذف هذا العنصر؟ لا يمكن التراجع عن هذا الإجراء.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="confirmCancel">إلغاء</button>
+        <button class="btn btn-danger" id="confirmOk">
+          <i class="fas fa-trash"></i> حذف
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       ZEN MODE OVERLAY (Notes)
+  ========================================= -->
+  <div class="zen-mode-overlay" id="zenModeOverlay" style="display:none;" role="dialog" aria-label="وضع التركيز">
+    <div class="zen-mode-container">
+      <div class="zen-toolbar">
+        <input type="text" class="zen-title" id="zenTitle" placeholder="العنوان..." />
+        <button class="zen-exit-btn" id="zenExitBtn" title="الخروج من وضع التركيز (F11 أو ESC)">
+          <i class="fas fa-compress-arrows-alt"></i>
+        </button>
+      </div>
+      <textarea class="zen-editor" id="zenEditor" placeholder="اكتب بتركيز كامل..."></textarea>
+      <div class="zen-footer">
+        <span id="zenWordCount">0 كلمة</span>
+        <span id="zenTime"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       TOAST NOTIFICATIONS CONTAINER
+  ========================================= -->
+  <div class="toast-container" id="toastContainer" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- ========================================
+       AUDIO ELEMENTS (Pomodoro)
+  ========================================= -->
+  <audio id="audioWork" preload="auto">
+    <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAA..." type="audio/wav" />
+  </audio>
+  <audio id="audioBreak" preload="auto">
+    <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAA..." type="audio/wav" />
+  </audio>
+
+  <!-- ========================================
+       HIDDEN FILE INPUT (Data Import)
+  ========================================= -->
+  <input type="file" id="importFileInput" accept=".json" style="display:none;" aria-hidden="true" />
+
+  <!-- ========================================
+       LIBRARIES (CDN)
+  ========================================= -->
+  <!-- Marked.js -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
+  <!-- DOMPurify -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+  <!-- Highlight.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+  <!-- KaTeX -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <!-- SortableJS -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+  <!-- FullCalendar -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.10/locales/ar.global.min.js"></script>
+
+  <!-- ========================================
+       SERVICE WORKER REGISTRATION
+  ========================================= -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('✅ Service Worker registered:', reg.scope))
+          .catch(err => console.warn('⚠️ SW registration failed:', err));
+      });
+    }
+  </script>
+
+  <!-- ========================================
+       APP SCRIPTS
+  ========================================= -->
+  <script src="state.js"></script>
+  <script src="api.js"></script>
+  <script src="utils.js"></script>
+  <script src="components/pomodoro.js"></script>
+  <script src="components/notes-editor.js"></script>
+  <script src="components/kanban.js"></script>
+  <script src="components/calendar.js"></script>
+  <script src="components/chat.js"></script>
+  <script src="components/dashboard.js"></script>
+  <script src="components/command-palette.js"></script>
+  <script src="offline-sync.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>

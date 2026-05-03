@@ -1,0 +1,33 @@
+المدير/
+├── index.html                    ✅ هيكل التطبيق + جميع الـ Modals
+├── style.css                     ✅ التصميم الكامل (40 قسم)
+├── manifest.json                 ✅ PWA Manifest
+├── sw.js                         ✅ Service Worker
+│
+├── state.js                      ✅ Central State Management
+├── api.js                        ✅ API Communication Layer
+├── utils.js                      ✅ Utilities Library (18 وحدة)
+├── offline-sync.js               ✅ Offline Sync Engine
+├── app.js                        ✅ Main App Controller
+│
+├── components/
+│   ├── dashboard.js              ✅ لوحة التحكم
+│   ├── kanban.js                 ✅ لوحة المهام
+│   ├── notes-editor.js           ✅ محرر الملاحظات
+│   ├── chat.js                   ✅ المحادثة AI
+│   ├── calendar.js               ✅ التقويم
+│   ├── pomodoro.js               ✅ مؤقت بومودورو
+│   └── command-palette.js        ✅ لوحة الأوامر
+│
+└── icons/
+    ├── icon-72.png
+    ├── icon-96.png
+    ├── icon-128.png
+    ├── icon-144.png
+    ├── icon-152.png
+    ├── icon-192.png  (maskable)
+    ├── icon-384.png
+    ├── icon-512.png  (maskable)
+    ├── shortcut-task.png
+    ├── shortcut-note.png
+    └── shortcut-chat.png
