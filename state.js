@@ -1089,7 +1089,7 @@ const Actions = {
     reset() {
       const phase    = State.get('pomodoro.phase');
       const settings = State.get('pomodoro.settings');
-      const totalSec = Actions.pomodoro.#getDurationFor(phase, settings) * 60;
+      const totalSec = Actions.pomodoro.getDurationFor(phase, settings) * 60;
       State.batch((s) => {
         s.set('pomodoro.isRunning', false);
         s.set('pomodoro.timeLeft',  totalSec);
