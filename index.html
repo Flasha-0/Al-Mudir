@@ -1436,18 +1436,29 @@
   <!-- ========================================
        APP SCRIPTS
   ========================================= -->
-  <script src="state.js"></script>
-  <script src="api.js"></script>
-  <script src="utils.js"></script>
-  <script src="components/pomodoro.js"></script>
-  <script src="components/notes-editor.js"></script>
-  <script src="components/kanban.js"></script>
-  <script src="components/calendar.js"></script>
-  <script src="components/chat.js"></script>
-  <script src="components/dashboard.js"></script>
-  <script src="components/command-palette.js"></script>
-  <script src="offline-sync.js"></script>
-  <script src="app.js"></script>
+   <!-- 1. الأدوات الأساسية (يجب أن يكون أول ملف) -->
+<script src="utils.js"></script> 
 
+<!-- 2. إدارة الحالة (يعتمد على utils) -->
+<script src="state.js"></script>
+
+<!-- 3. الاتصال (يعتمد على state و utils) -->
+<script src="api.js"></script>
+
+<!-- 4. المكونات (تعتمد على كل ما سبق) -->
+<script src="components/dashboard.js"></script>
+<script src="components/calendar.js"></script>
+<script src="components/chat.js"></script>
+<script src="components/kanban.js"></script>
+<script src="components/notes-editor.js"></script>
+<script src="components/pomodoro.js"></script>
+<script src="components/command-palette.js"></script>
+
+<!-- 5. المزامنة والأوفلاين -->
+<script src="offline-sync.js"></script>
+
+<!-- 6. المحرك الرئيسي (يجب أن يكون آخر ملف) -->
+<script src="app.js"></script>
+  
 </body>
 </html>
