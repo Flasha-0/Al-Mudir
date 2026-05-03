@@ -1081,7 +1081,7 @@ const Toast = {
     info:    'fas fa-info-circle',
   },
 
-  #timers: new Map(),
+  _timers: new Map(),
 
   show(type, title, message = '', options = {}) {
     const {
